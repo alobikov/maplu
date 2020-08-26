@@ -1,4 +1,5 @@
 import axios from "axios";
+
 const form$ = document.querySelector("form")! as HTMLFormElement;
 const input$ = form$.querySelector("#address")! as HTMLInputElement;
 const yandexApiKey = "52a66d3b-db10-4104-9ad4-85f1b227a925";
@@ -23,10 +24,10 @@ function init(): void {
        */
       center: coordinates.reverse(), // Moscow
       zoom: 10,
-    },
-    {
-      searchControlProvider: "yandex#search",
     }
+    // {
+    //   searchControlProvider: "yandex#search",
+    // }
   );
 }
 
@@ -50,9 +51,16 @@ function submitHandler(event: Event) {
       // );
       console.log(...coordinates);
       console.log(response);
+      cleanMapDiv();
       ymaps.ready(init);
     })
     .catch((error: any) => console.error(error));
+}
+
+function cleanMapDiv() {
+  const elm = document.getElementById("map")?.firstChild!;
+  elm.remove();
+  console.log(elm);
 }
 
 form$.addEventListener("submit", submitHandler.bind(this));
